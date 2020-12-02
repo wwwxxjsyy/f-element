@@ -10,6 +10,9 @@
 </template>
 
 <script>
+import { ShrButton } from "../packages";
+console.log(ShrButton);
+
 export default {
   name: "app",
   components: {},
