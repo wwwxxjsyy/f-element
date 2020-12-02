@@ -1,6 +1,6 @@
-import SongTest from "./test";
+import ShrButton from "./button";
 // 所有组件列表
-const components = [SongTest];
+const components = [ShrButton];
 
 // 定义 install 方法，接收 Vue 作为参数
 const install = function (Vue) {
@@ -20,11 +20,11 @@ if (typeof window !== "undefined" && window.Vue) {
 
 export {
   install,
-  SongTest
+  ShrButton
 }
 
 export default {
   install,
   // 所有组件，必须具有 install，才能使用 Vue.use()
-  SongTest
+  ShrButton
 };

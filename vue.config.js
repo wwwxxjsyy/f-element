@@ -3,6 +3,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   devServer: {
+    port: 9981,
     open: true,
     overlay: {
       warnings: false,

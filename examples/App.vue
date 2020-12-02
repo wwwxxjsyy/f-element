@@ -3,20 +3,16 @@
     <div id="nav">
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
-      <Song-Test></Song-Test>
     </div>
     <!-- <router-view /> -->
+    <Shr-Button>button测试</Shr-Button>
   </div>
 </template>
 
 <script>
-import { SongTest } from "../packages/index";
-
 export default {
   name: "app",
-  components: {
-    SongTest,
-  },
+  components: {},
 };
 </script>
 
