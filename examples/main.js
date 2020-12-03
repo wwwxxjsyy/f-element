@@ -6,7 +6,7 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 
 //导入组件
-import ShrUI from "../packages";
+import ShrUI from "~";
 
 //注册组件
 Vue.use(ShrUI);
