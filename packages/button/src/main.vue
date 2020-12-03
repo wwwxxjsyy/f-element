@@ -7,8 +7,11 @@
 </template>
 
 <script>
+import msg from "@src/mixins";
+
 export default {
   name: "ShrButton",
+  mixins: [msg.msg],
   props: {
     time: {
       type: Number,
@@ -31,6 +34,10 @@ export default {
 
       this.$emit("click");
     },
+  },
+  created() {
+    this.handlemsgplus();
+    console.log(this.msg);
   },
 };
 </script>

@@ -33,6 +33,7 @@ module.exports = {
     config.resolve.alias
       .set('@', path.resolve('examples'))
       .set('~', path.resolve('packages'))
+      .set('@src', path.resolve('src'))
 
     // 把 packages 和 examples 加入编译，因为新增的文件默认是不被 webpack 处理的
     config.module
