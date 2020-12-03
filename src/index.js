@@ -1,9 +1,11 @@
 import ShrButton from "../packages/button";
+import ShrCanvas from "../packages/canvas";
+import Drawing from "../packages/Drawing";
 
 import { resolvingDate } from "./utils"
 
 // 所有组件列表
-const components = [ShrButton];
+const components = [ShrButton, ShrCanvas, Drawing];
 
 // 定义 install 方法，接收 Vue 作为参数
 const install = function (Vue) {
@@ -25,6 +27,8 @@ if (typeof window !== "undefined" && window.Vue) {
 export {
   install,
   ShrButton,
+  ShrCanvas,
+  Drawing,
 
   // function
   resolvingDate
@@ -33,4 +37,6 @@ export {
 export default {
   install,
   ShrButton,
+  ShrCanvas,
+  Drawing
 };

@@ -37,7 +37,6 @@ export default {
   },
   created() {
     this.handlemsgplus();
-    console.log(this.msg);
   },
 };
 </script>
