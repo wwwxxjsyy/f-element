@@ -1,6 +1,6 @@
-import ShrButton from "./button";
+import ShrButton from "../packages/button";
 
-import { resolvingDate } from "../src/utils"
+import { resolvingDate } from "./utils"
 
 // 所有组件列表
 const components = [ShrButton];
