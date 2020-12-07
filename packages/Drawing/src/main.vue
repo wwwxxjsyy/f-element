@@ -1,13 +1,18 @@
 <!--  -->
 <template>
   <div class="Drawing_div_com">
-    <el-button type="success" @click="handlebtn">哈哈哈哈哈</el-button>
+    <el-button
+      type="success"
+      @click="handlebtn"
+    >随机在PDF上画图</el-button>
     <div class="Drawing_div">
-      <div class="pdf_div_class" ref="table">
+      <div
+        class="pdf_div_class"
+        ref="table"
+      >
         <pdf
-          :src="
-            'http://otech-stage-ocr-ccp.oss-cn-hangzhou.aliyuncs.com/a4fca993-72fc-47e7-8209-42df918a93f2.pdf?OSSAccessKeyId=LTAI4G7PQX4etsapbM96xffN&Expires=1606992850&Signature=%2BYbd%2F6EXgvJPlnsjHZOR%2F0R%2BUOY%3D'
-          "
+          @CurrentChange="hadnleCurrentChange"
+          :src="url"
         ></pdf>
       </div>
 
@@ -22,16 +27,20 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 import pdf from "./pdf";
 
 export default {
-  name: "DrAwing",
+  name: "ShrdrAwing",
 
   components: {
     pdf,
   },
 
-  props: {},
+  props: ['url'],
+
+  updated() {
+  },
 
   data() {
     return {
@@ -46,47 +55,42 @@ export default {
   computed: {},
 
   methods: {
-    handlebtn() {
-      let table = document.getElementsByClassName("pdf_div")[0];
-      this.canvasWidth = table.offsetWidth;
-      this.canvasHeight = table.offsetHeight;
+    hadnleCurrentChange(val) {
+      console.log('当前是第', val, '页')
+    },
+    handlebtn(row) {
+      const randomNum = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
 
+      let leftTopX = randomNum(1, 482);
+      let leftTopY = randomNum(1, 623);
+      let customcxtW = 10;
+      let customcxtH = 10;
+
+      this.customcxt.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.customcxt.strokeStyle = "red"; //矩形框颜色
       // this.customcxt.fillStyle = "#000"; //canvas背景
+      this.customcxt.lineWidth = "1"; //矩形框宽度
+      this.customcxt.strokeRect(leftTopX, leftTopY, customcxtW, customcxtH); //绘制矩形
 
-      let arr = [
-        // 左上X，左上Y，右上X，右上Y，右下X，右下Y，左下X，左下Y
-        0.04302832244008715,
-        0.38552188552188554,
-        0.9852941176470589,
-        0.38552188552188554,
-        0.9852941176470589,
-        0.3998316498316498,
-        0.04302832244008715,
-        0.3998316498316498,
-      ];
-
-      let leftTopX = 0.04302832244008715;
-      let leftTopY = 0.38552188552188554;
-
-      let customcxtW = 100;
-      let customcxtH = 20;
-
-      this.$nextTick(() => {
-        let customCanvas = this.$refs.canvascxt; // canvas显示层
-        this.customcxt = customCanvas.getContext("2d");
-        this.customcxt.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-        this.customcxt.strokeStyle = "red"; //矩形框颜色
-        this.customcxt.lineWidth = "1"; //矩形框宽度
-
-        this.customcxt.strokeRect(leftTopX, leftTopY, customcxtW, customcxtH); //绘制矩形
-      });
       // this.customcxt.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     },
   },
 
-  created() {},
+  created() { },
 
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      let table = document.getElementsByClassName("pdf_div")[0];
+      this.canvasWidth = table.offsetWidth;
+      this.canvasHeight = table.offsetHeight;
+
+      let customCanvas = this.$refs.canvascxt; // canvas显示层
+      this.customcxt = customCanvas.getContext("2d");
+    }, 1000);
+
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -97,6 +101,11 @@ export default {
     margin-top: 10px;
     display: flex;
     position: relative;
+
+    // .pdf_div_class {
+    //   width: 700px;
+    //   height: 600px;
+    // }
 
     .canvas_class {
       position: absolute;

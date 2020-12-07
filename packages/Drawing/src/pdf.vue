@@ -36,12 +36,13 @@ export default {
       pageCount: 0,
     };
   },
-  created() {},
+  created() { },
   methods: {
     handleSizeChange(val) {
       //   console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.$emit("CurrentChange", val)
       //   console.log(`当前页: ${val}`);
     },
     loadPdfHandler(e) {
