@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link> -->
     </div>
     <!-- <router-view /> -->
-    <!-- <Shr-Button>Button</Shr-Button> -->
+    <Shr-Button>Button</Shr-Button>
     <!-- <ShrCanvas
       @custom="handleCallback"
       :imgSrc="
@@ -13,9 +13,9 @@
       "
     ></ShrCanvas> -->
 
-    <ShrdrAwing
+    <!-- <ShrdrAwing
       url="/2/2020/3258/2775/INVOICE%20(2).pdf"
-    ></ShrdrAwing>
+    ></ShrdrAwing> -->
   </div>
 </template>
 

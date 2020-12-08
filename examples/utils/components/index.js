@@ -9,9 +9,7 @@ const install = function (Vue) {
   if (install.installed) return;
   install.installed = true;
   // 遍历注册所有组件
-  components.map(component => Vue.component(component.name, component));
-  // 下面这个写法也可以
-  // components.map(component => Vue.use(component))
+  components.map(component => Vue.use(component))
 };
 
 // 检测到 Vue 才执行，毕竟我们是基于 Vue 的
