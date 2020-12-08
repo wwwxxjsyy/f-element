@@ -1,10 +1,7 @@
-import ShrButton from "../packages/button";
-import ShrCanvas from "../packages/canvas";
-
-import { resolvingDate } from "./utils"
+import PDFDrawing from "@/components/PDFDrawing";
 
 // 所有组件列表
-const components = [ShrButton, ShrCanvas];
+const components = [PDFDrawing];
 
 // 定义 install 方法，接收 Vue 作为参数
 const install = function (Vue) {
@@ -15,7 +12,6 @@ const install = function (Vue) {
   components.map(component => Vue.component(component.name, component));
   // 下面这个写法也可以
   // components.map(component => Vue.use(component))
-  Vue.prototype.$resolvingDate = resolvingDate;
 };
 
 // 检测到 Vue 才执行，毕竟我们是基于 Vue 的
@@ -23,17 +19,6 @@ if (typeof window !== "undefined" && window.Vue) {
   install(window.Vue);
 }
 
-export {
-  install,
-  ShrButton,
-  ShrCanvas,
-
-  // function
-  resolvingDate
-}
-
 export default {
   install,
-  ShrButton,
-  ShrCanvas,
 };

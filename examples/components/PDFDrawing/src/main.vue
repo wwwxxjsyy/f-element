@@ -1,19 +1,10 @@
 <!--  -->
 <template>
   <div class="Drawing_div_com">
-    <el-button
-      type="success"
-      @click="handlebtn"
-    >随机在PDF上画图</el-button>
+    <el-button type="success" @click="handlebtn">随机在PDF上画图</el-button>
     <div class="Drawing_div">
-      <div
-        class="pdf_div_class"
-        ref="table"
-      >
-        <pdf
-          @CurrentChange="hadnleCurrentChange"
-          :src="url"
-        ></pdf>
+      <div class="pdf_div_class" ref="table">
+        <pdf @CurrentChange="hadnleCurrentChange" :src="url"></pdf>
       </div>
 
       <canvas
@@ -27,26 +18,25 @@
 </template>
 
 <script>
-import { setTimeout } from 'timers';
+// import { setTimeout } from "timers";
 import pdf from "./pdf";
 
 export default {
   name: "ShrdrAwing",
 
   components: {
-    pdf,
+    pdf
   },
 
-  props: ['url'],
+  props: ["url"],
 
-  updated() {
-  },
+  updated() {},
 
   data() {
     return {
       customcxt: "", //cxt
       canvasHeight: "",
-      canvasWidth: "",
+      canvasWidth: ""
     };
   },
 
@@ -61,7 +51,7 @@ export default {
     handlebtn() {
       const randomNum = (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
-      }
+      };
 
       let leftTopX = randomNum(1, 482);
       let leftTopY = randomNum(1, 623);
@@ -75,10 +65,10 @@ export default {
       this.customcxt.strokeRect(leftTopX, leftTopY, customcxtW, customcxtH); //绘制矩形
 
       // this.customcxt.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-    },
+    }
   },
 
-  created() { },
+  created() {},
 
   mounted() {
     setTimeout(() => {
@@ -88,9 +78,8 @@ export default {
 
       let customCanvas = this.$refs.canvascxt; // canvas显示层
       this.customcxt = customCanvas.getContext("2d");
-    }, 1000);
-
-  },
+    }, 3000);
+  }
 };
 </script>
 <style lang="scss" scoped>

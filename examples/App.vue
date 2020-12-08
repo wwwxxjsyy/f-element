@@ -6,13 +6,16 @@
     </div>
     <!-- <router-view /> -->
     <!-- <Shr-Button>Button</Shr-Button> -->
-    <ShrCanvas 
-    @custom="handleCallback"
-    :imgSrc="
+    <!-- <ShrCanvas
+      @custom="handleCallback"
+      :imgSrc="
         'https://topstage.otechsolution.com:8010/other/2019/2/4/0103d38d-0ebf-437e-a7e5-6a10f5f2c4a5.jpg'
-      "></ShrCanvas>
+      "
+    ></ShrCanvas> -->
 
-    <!-- <ShrdrAwing :url="'http://otech-stage-ocr-ccp.oss-cn-hangzhou.aliyuncs.com/a4fca993-72fc-47e7-8209-42df918a93f2.pdf?OSSAccessKeyId=LTAI4G7PQX4etsapbM96xffN&Expires=1607317127&Signature=qT0R%2FEKS%2BAY59RYSh3ppeUNC5Mw%3D'"></ShrdrAwing> -->
+    <ShrdrAwing
+      url="/2/2020/3258/2775/INVOICE%20(2).pdf"
+    ></ShrdrAwing>
   </div>
 </template>
 
@@ -20,10 +23,10 @@
 export default {
   name: "app",
   components: {},
-  created() { },
-  methods:{
-    handleCallback({type,data}){
-      console.log(data)
+  created() {},
+  methods: {
+    handleCallback({ type, data }) {
+      console.log(data);
     }
   }
 };

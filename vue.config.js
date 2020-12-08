@@ -12,6 +12,11 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      "/2": {
+        target: "http://192.168.30.55:8010",
+      },
+    },
     // lintOnSave: false
   },
   productionSourceMap: false,
@@ -35,6 +40,7 @@ module.exports = {
     config.resolve.alias
       .set('@', path.resolve('examples'))
       .set('~', path.resolve('packages'))
+      .set('@com', path.resolve('components'))
       .set('@src', path.resolve('src'));
 
     if (IS_PROD) {
