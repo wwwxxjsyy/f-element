@@ -3,7 +3,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const IS_PROD = ["production"].includes(process.env.NODE_ENV)
 
 module.exports = {
-  publicPath: '/',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   outputDir: 'dist',
   devServer: {
     port: 9981,
@@ -47,7 +47,6 @@ module.exports = {
           },
         },
       })
-      console.log('321')
     }
 
     // 把 packages 和 examples 加入编译，因为新增的文件默认是不被 webpack 处理的

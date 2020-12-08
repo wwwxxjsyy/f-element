@@ -1,6 +1,8 @@
 <template>
   <div class="customPositionDiv">
-    <div style="background-color:#c0c0c0;margin:0 auto;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;">
+    <div
+      style="background-color:#c0c0c0;margin:0 auto;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;"
+    >
       <div
         @mousedown="mousedown"
         @mousemove="mousemove"
@@ -8,11 +10,7 @@
         @Mouseleave="Mouseleave"
         :style="imgstyle"
       >
-        <img
-          :src="imgSrc"
-          :style="imgstyle"
-          class="img_class"
-        />
+        <img :src="imgSrc" :style="imgstyle" class="img_class" />
         <canvas
           ref="table"
           :width="canvasWidth"
@@ -23,23 +21,15 @@
     </div>
 
     <div style="z-index: inherit;text-align: right ;margin:10px 0 0 0">
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="customClose">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="customQuery"
-        >确 定</el-button>
+        <el-button type="primary" @click="customQuery">确 定</el-button>
       </span>
     </div>
   </div>
 </template>
 
 <script>
-import vue from "vue";
-
 export default {
   name: "ShrCanvas",
   props: ["imgSrc"],
@@ -64,7 +54,7 @@ export default {
     };
   },
   watch: {
-    imgSrc: function () {
+    imgSrc: function() {
       this.show();
     }
   },
@@ -111,21 +101,20 @@ export default {
       oMark["offsetWidth"] = parseInt(cWidth / this.customRwidth);
       oMark["offsetHeight"] = parseInt(cHeight / this.customRheight);
 
-      console.log(oMark);
-
+      // console.log(oMark);
       this.$emit("custom", { type: 2, data: oMark });
     },
 
     // dialog展示自定义矩形框画板，
     // 计算img与canvas标签自适应图片的大小
     show() {
-      vue.nextTick(_ => {
+      this.$nextTick(() => {
         let customCanvas = this.$refs.table; // canvas显示层
         this.customcxt = customCanvas.getContext("2d");
         let img = new Image();
         img.src = this.imgSrc;
         let that = this;
-        img.onload = function () {
+        img.onload = function() {
           let canvasleft = 0;
           let canvastop = 0;
           let WrH = img.width / img.height; //图片宽高比
@@ -158,7 +147,11 @@ export default {
           that.customRheight = that.canvasHeight / img.height;
 
           that.canvasstyle =
-            "position: absolute;left: " + canvasleft + "; top: " + canvastop + ";"; //canvas浮动定位
+            "position: absolute;left: " +
+            canvasleft +
+            "; top: " +
+            canvastop +
+            ";"; //canvas浮动定位
         };
       });
     },
@@ -197,7 +190,7 @@ export default {
 
     Mouseleave() {
       this.isMouseDownInCanvas = false;
-    },
+    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "shr-ui",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "private": false,
   "main": "lib/shr-ui.umd.js",
   "style": "lib/shr-ui.css",
@@ -15,7 +15,7 @@
     "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "lib": "vue-cli-service build --target lib --name shr-ui --dest lib src/index.js"
+    "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -47,7 +47,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console":"off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

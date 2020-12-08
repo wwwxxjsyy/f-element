@@ -55,10 +55,10 @@ export default {
   computed: {},
 
   methods: {
-    hadnleCurrentChange(val) {
-      console.log('当前是第', val, '页')
+    hadnleCurrentChange() {
+      // console.log('当前是第', val, '页')
     },
-    handlebtn(row) {
+    handlebtn() {
       const randomNum = (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
       }
