@@ -12,11 +12,11 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: {
-      "/2": {
-        target: "http://192.168.30.55:8010",
-      },
-    },
+    // proxy: {
+    //   "": {
+    //     target: "",
+    //   },
+    // },
     // lintOnSave: false
   },
   productionSourceMap: false,
