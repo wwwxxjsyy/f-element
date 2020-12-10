@@ -23,12 +23,14 @@
 export default {
   name: "app",
   components: {},
-  created() {},
+  created() {
+    console.log("console");
+  },
   methods: {
     handleCallback({ type, data }) {
       console.log(data);
-    }
-  }
+    },
+  },
 };
 </script>
 
