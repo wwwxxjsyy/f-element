@@ -9,7 +9,7 @@
     <!-- <ShrCanvas
       @custom="handleCallback"
       :imgSrc="
-        'https://topstage.otechsolution.com:8010/other/2019/2/4/0103d38d-0ebf-437e-a7e5-6a10f5f2c4a5.jpg'
+        ''
       "
     ></ShrCanvas> -->
 
