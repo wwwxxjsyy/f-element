@@ -12,11 +12,11 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // proxy: {
-    //   "": {
-    //     target: "",
-    //   },
-    // },
+    proxy: {
+      "/s": {
+        target: "https://www.baidu.com",
+      },
+    },
     // lintOnSave: false
   },
   productionSourceMap: false,
