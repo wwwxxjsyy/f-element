@@ -40,6 +40,7 @@ export default {
     //   .then((res) => {
     //     this.datatext = res.data;
     //   });
+    console.log("打印了");
   },
   methods: {
     handleCallback({ type, data }) {
