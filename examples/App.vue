@@ -14,7 +14,7 @@
     ></ShrCanvas> -->
 
     <!-- <ShrdrAwing
-      url="/2/2020/3258/2775/INVOICE%20(2).pdf"
+      url=""
     ></ShrdrAwing> -->
 
     <div v-html="datatext"></div>
