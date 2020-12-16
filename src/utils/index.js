@@ -32,3 +32,31 @@ export const resolvingDate = (date, isHms) => {
     }
   }
 }
+
+/**
+ * 实现并发请求，并在最后拿到结果
+ * @param {Array} tasks 
+ * @param {Number} max 
+ * @param {function} callback 
+ */
+export function startLimitPool(tasks, max, callback) {
+  const result = []
+  Promise.all(
+    Array.from({ length: max }).map(() => {
+      return new Promise(resolve => {
+        function runTask() {
+          if (tasks.length <= 0) {
+            resolve()
+            return
+          }
+          const task = tasks.shift()
+          task().then(res => {
+            result.push(res)
+            runTask()
+          })
+        }
+        runTask()
+      })
+    })
+  ).then(() => callback(result))
+}

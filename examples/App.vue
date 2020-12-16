@@ -41,12 +41,52 @@ export default {
     //     console.log(res)
     //     // this.datatext = res.data;
     //   })
-    console.log('打印了')
+
+    this.handler()
   },
   methods: {
     // handleCallback({ type, data }) {
     //   console.log(data);
     // },
+    handler () {
+      const promise1 = () => Promise.resolve(3)
+      const promise2 = () =>
+        new Promise((resolve, reject) => {
+          setTimeout(resolve, 100, 'foo')
+        })
+      const promise3 = () => Promise.resolve(4)
+
+      const tasksdata = [promise1, promise2, promise3]
+      const maxdata = 1
+
+      function startLimitPool (tasks, max, callback) {
+        console.time()
+        const result = []
+        Promise.all(
+          Array.from({ length: max }).map(() => {
+            return new Promise(resolve => {
+              function runTask () {
+                if (tasks.length <= 0) {
+                  resolve()
+                  return
+                }
+                const task = tasks.shift()
+                task().then(res => {
+                  result.push(res)
+                  runTask()
+                })
+              }
+              runTask()
+            })
+          })
+        ).then(() => callback(result))
+        console.timeEnd()
+      }
+
+      startLimitPool(tasksdata, maxdata, res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>
