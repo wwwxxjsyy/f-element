@@ -1,10 +1,6 @@
 const path = require("path");
 //去除console
 const TerserPlugin = require('terser-webpack-plugin')
-//开启gzip压缩
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-// 匹配此 {RegExp} 的资源
-const productionGzipExtensions = /\.(js|css|json|ttf)(\?.*)?$/i
 
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
@@ -25,16 +21,6 @@ module.exports = {
   },
   productionSourceMap: false,
   configureWebpack: {
-    // plugins: [
-    //   new CompressionWebpackPlugin({
-    //     filename: '[path][name].gz[query]',
-    //     algorithm: 'gzip',
-    //     test: productionGzipExtensions,
-    //     threshold: 0,
-    //     minRatio: 0.8,
-    //   }),
-    //   new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // ],
     optimization: {
       minimizer: [
         new TerserPlugin({
@@ -62,6 +48,19 @@ module.exports = {
   },
   // 扩展 webpack 配置
   chainWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      const CompressionPlugin = require('compression-webpack-plugin');
+      const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
+
+      config.plugin('compressionPlugin')
+        .use(new CompressionPlugin({
+          filename: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: productionGzipExtensions,
+          threshold: 10240,
+          minRatio: 0.8
+        }));
+    }
     // @ 默认指向 src 目录，这里要改成 examples
     // 另外也可以新增一个 ~ 指向 packages
     config.resolve.alias
