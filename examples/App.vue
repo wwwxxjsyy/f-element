@@ -1,10 +1,6 @@
 <template>
   <div id="app">
     <div id="nav">
-      <h2>
-        我是周小猪
-        <img :src="url" alt="" class="img_class" />
-      </h2>
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
     </div>
@@ -22,6 +18,7 @@
     ></ShrdrAwing> -->
 
     <!-- <div v-html="datatext"></div> -->
+    <ImgUrl></ImgUrl>
   </div>
 </template>
 
