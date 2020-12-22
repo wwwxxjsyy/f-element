@@ -11,7 +11,7 @@
     <div class="box">
       <div class="item" v-for="(item, index) in tableData" :key="index">
         <img
-          :src="item.middleURL"
+          v-lazy="item.middleURL"
           :alt="item.fromPageTitle"
           :title="item.fromPageTitle"
         />

@@ -1,118 +1,207 @@
 <template>
-  <div class="fall-pic">
-    <ul class="col left" ref="col1">
-      <li class="item-pro" v-for="(item, keys) in dataList1" :key="keys">
-        <img :src="item.middleURL" />
-      </li>
-    </ul>
-    <ul class="col right" ref="col2">
-      <li class="item-pro" v-for="(item, keys) in dataList2" :key="keys">
-        <img :src="item.picUrl" />
-      </li>
-    </ul>
+  <div class="waterFall-box" ref="box">
+    <div class="img-box" v-for="(item, index) in images" :key="index" ref="img">
+      <img :src="item.middleURL" alt="" />
+    </div>
+    <footer
+      v-if="isLoad == false"
+      :style="{
+        position: 'absolute',
+        top: Math.max(...heightArray) + 'px',
+        color: 'red',
+        left: '50%',
+        transform: 'translateX(-50%)'
+      }"
+    >
+      没有图片加载了...
+    </footer>
   </div>
 </template>
 
 <script>
-import { getImgData } from "@/api/imgurl";
+import { getImgData } from '@/api/imgurl'
+// import Axios from 'axios'
 
 export default {
-  name: "ImgUrl",
-  data() {
+  name: 'ImgUrl',
+  data () {
     return {
-      mainMenuList: [], //保存所有图片
-      //保存渲染到页面上的图片
-      dataList1: [],
-      dataList2: [],
-      word: "搜搜",
-      gsm: 87,
-      pn: 100
-    };
-  },
-  mounted() {},
-  created() {
-    this.initData();
+      images: [], //存储图片资源
+      imgWidth: 220, //图片的宽度
+      heightArray: [], //存储高度数组，用于判断最小高度的图片位置
+      isLoad: true, //是否继续加载图片
+      surplusW: 0, //是否存在剩余宽度
+      offsetP: 0,
+      count: 0,
+      pn: 100,
+      word: '1',
+      gsm: 87
+    }
   },
   methods: {
-    async initData() {
-      const datas = {
-        pn: this.pn,
-        word: this.word,
-        gsm: this.gsm
-      };
-
-      // 发送请求
-      try {
-        const { data: result, gsm: gsm } = await getImgData(datas);
-        this.mainMenuList = result;
-        // console.log(this.mainMenuList)
-        this.mountMenu();
-      } catch {}
+    /**
+     * 预加载图片资源
+     * */
+    loadImgHeight () {
+      let count = 0 //计数变量 判断是否预加载图片是否完成
+      this.images.forEach(item => {
+        //使用image类预加载图片
+        let image = new Image()
+        image.src = item.img
+        image.onload = image.onerror = event => {
+          count++
+          if (count == this.images.length) {
+            this.$nextTick(() => {
+              this.init()
+              this.positionImg(0)
+            })
+          }
+        }
+      })
     },
-    mountMenu(arg) {
-      var temp = this.mainMenuList;
-      var index = arg || 0;
-      // console.log(index)
-      // 判断ul高度（返回来一个高度最小的ul）
-      var refName = this.selectCol();
-      console.log(refName);
-      if (temp.length > index) {
-        // console.log(index)
-        // 每次比较高度之后从mainMenuList数组中取出一张图片放到高度最小的ul中
-        this[refName].push(this.mainMenuList[index]);
-        //当你修改了data的值然后马上获取这个dom元素的值，是不能获取到更新后的值，
-        // 你需要使用$nextTick这个回调，让修改后的data值渲染更新到dom元素之后在获取，才能成功
-        this.$nextTick(() => {
-          this.mountMenu(index + 1);
-          // console.log(refName)
-        });
+    /**
+     * @remarks 初始化
+     * 初始化容器的宽度，计算出容器可容纳多少固定宽度图片的列，
+     * 如果可排列固定宽度的图片宽度无法沾满容器的宽度，需要计算出空余的宽度，固定首图片的left
+     * */
+    init () {
+      //得到页面的宽度
+      const pageWidth_padding = this.$refs.box.clientWidth
+      //页面的padding像素
+      this.offsetP = this.$refs.box.style.paddingLeft.replace(/[^0-9]/gi, '')
+      //获得页面的真实宽度（除去padding、margin、border...）
+      const pageWidth = pageWidth_padding - this.offsetP * 2
+      //计算出当前页面可展示多少列图片
+      const column = Math.floor(pageWidth / this.imgWidth)
+      //偏移像素值
+      this.surplusW = pageWidth - column * this.imgWidth
+      //初始化存储高度数组
+      for (let i = 0; i < column; i++) {
+        this.heightArray.push(0)
       }
     },
-    selectCol() {
-      var getHeight = ref => {
-        // $refs获取dom节点
-        return this.$refs[ref].offsetHeight;
-      };
-      var height1 = getHeight("col1");
-      var height2 = getHeight("col2");
-      // 判断高度
-      switch (Math.min(height1, height2)) {
-        case height1:
-          return "dataList1";
-          break;
-        case height2:
-          return "dataList2";
-          break;
+    /**
+     * @remark 定位图片
+     * @param:
+     *  start: 循环开始位置，开始为0，如果滚动条滑到底部，则start为容器存在图片资源的数量即this.images.length
+     *  ----------宽高都计算img的父容器的宽高
+     * */
+    positionImg (start) {
+      //获得img标签的父容器的DOM
+      let parentDom = this.$refs.img
+      for (let i = start; i < this.images.length; i++) {
+        //获得最小高度
+        const minHeight = Math.min(...this.heightArray)
+        //获得最小高度索引
+        const index = this.heightArray.indexOf(minHeight)
+        //获得当前图片的高度
+        const currHeight = parentDom[i].clientHeight
+        //定位
+        parentDom[i].style.transform = '50px'
+        parentDom[i].style.position = 'absolute'
+        parentDom[i].style.top = minHeight + 'px'
+        parentDom[i].style.left =
+          this.imgWidth * index + +(Math.floor(this.surplusW / 2) + 30) + 'px'
+        this.heightArray[index] += currHeight
       }
+      //对父容器赋值当前heightArray数组的最大高度
+      this.$refs.box.style.height = Math.max(...this.heightArray) + 50 + 'px'
     }
+  },
+  mounted () {
+    const _this = this
+    //监听滚动条滚动，实现懒加载图片
+    window.addEventListener('scroll', function () {
+      //得到可滚动距离
+      const scrollDistance =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight
+      //滚动到顶部的距离
+      const scroll = document.documentElement.scrollTop
+      if (scrollDistance == scroll) {
+        const data = {
+          pn: this.pn,
+          word: this.word,
+          gsm: this.gsm
+        }
+        getImgData(data).then(res => {
+          _this.count += 1
+          if (_this.count == 4) {
+            _this.isLoad = false
+          }
+          if (_this.isLoad) {
+            const start = _this.images.length
+            for (let item of res.data) {
+              _this.images.push(item)
+            }
+            //滑到底部继续加载图片，this.$nextTick()异步加载，待资源虚拟DOM加载完毕
+            _this.$nextTick(() => {
+              _this.positionImg(start)
+            })
+          }
+        })
+      }
+    })
+  },
+  created () {
+    const data = {
+      pn: this.pn,
+      word: this.word,
+      gsm: this.gsm
+    }
+
+    getImgData(data)
+      .then(result => {
+        // console.log(result)
+        if (result.status == 200) {
+          this.images = result.data
+
+          this.gsm = result.gsm
+          this.pn += 30
+          this.loadImgHeight()
+        }
+      })
+      .catch(err => {
+        // console.log(err, 'err')
+        // this.images = []
+      })
   }
-};
+}
 </script>
 
-<style lang="scss" scoped>
-// 布局样式
-.fall-pic {
-  background: #f5f5f5;
+<style scoped>
+.waterFall-box {
+  position: relative;
+  text-align: center;
+  overflow-y: hidden;
+}
+
+.waterFall-box .img-box {
+  width: 210px;
+  vertical-align: top;
+  display: block;
+  float: left;
+}
+
+.waterFall-box .img-box img {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  animation: imgBox 0.5s ease-in-out;
+}
 
-  .col {
-    width: 50%;
-    &.left {
-      float: left;
-    }
-    &.right {
-      float: right;
-    }
+.waterFall-box .img-box img:hover {
+  transform: translateY(-3px);
+  transition: transform 0.5s ease-in-out;
+  box-shadow: 0 20px 20px 2px #737373;
+}
 
-    .item-pro {
-      padding: 2px 4px;
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
+@keyframes imgBox {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 </style>
