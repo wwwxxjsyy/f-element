@@ -47,8 +47,8 @@ export default {
       this.images.forEach(item => {
         //使用image类预加载图片
         let image = new Image()
-        image.src = item.img
-        image.onload = image.onerror = event => {
+        image.src = item.middleURL
+        image.onload = image.onerror = () => {
           count++
           if (count == this.images.length) {
             this.$nextTick(() => {
@@ -131,9 +131,13 @@ export default {
           }
           if (_this.isLoad) {
             const start = _this.images.length
+            this.gsm = res.gsm
+            this.pn += 30
+
             for (let item of res.data) {
               _this.images.push(item)
             }
+            // console.log(_this.images, '_this.images')
             //滑到底部继续加载图片，this.$nextTick()异步加载，待资源虚拟DOM加载完毕
             _this.$nextTick(() => {
               _this.positionImg(start)
@@ -162,8 +166,7 @@ export default {
         }
       })
       .catch(err => {
-        // console.log(err, 'err')
-        // this.images = []
+        console.log(err, 'err')
       })
   }
 }
@@ -178,7 +181,6 @@ export default {
 
 .waterFall-box .img-box {
   width: 210px;
-  vertical-align: top;
   display: block;
   float: left;
 }
