@@ -1,72 +1,117 @@
-<!--  -->
 <template>
-  <div class="ImgUrl_div">
-    <ul>
-      <li v-for="(item, index) in tableData" :key="index">
-        <a :href="item.hoverURL">
-          <img
-            :src="item.middleURL"
-            :alt="item.fromPageTitle"
-            :title="item.fromPageTitle"
-          />
-        </a>
+  <div class="fall-pic">
+    <ul class="col left" ref="col1">
+      <li class="item-pro" v-for="(item, keys) in dataList1" :key="keys">
+        <img :src="item.middleURL" />
+      </li>
+    </ul>
+    <ul class="col right" ref="col2">
+      <li class="item-pro" v-for="(item, keys) in dataList2" :key="keys">
+        <img :src="item.picUrl" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { getImgData } from "@/api/imgurl";
+
 export default {
   name: "ImgUrl",
-
-  components: {},
-
-  props: [],
-
-  updated() {},
-
   data() {
     return {
-      tableData: [],
+      mainMenuList: [], //保存所有图片
+      //保存渲染到页面上的图片
+      dataList1: [],
+      dataList2: [],
+      word: "搜搜",
+      gsm: 87,
+      pn: 100
     };
   },
-
-  watch: {},
-
-  computed: {},
-
-  methods: {},
-
-  created() {
-    this.$axios
-      .get("http://192.168.0.103:8000/spider4", {
-        params: {
-          page: Math.random() * 100,
-        },
-      })
-      .then((result) => {
-        this.tableData = result.data;
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-  },
-
   mounted() {},
+  created() {
+    this.initData();
+  },
+  methods: {
+    async initData() {
+      const datas = {
+        pn: this.pn,
+        word: this.word,
+        gsm: this.gsm
+      };
+
+      // 发送请求
+      try {
+        const { data: result, gsm: gsm } = await getImgData(datas);
+        this.mainMenuList = result;
+        // console.log(this.mainMenuList)
+        this.mountMenu();
+      } catch {}
+    },
+    mountMenu(arg) {
+      var temp = this.mainMenuList;
+      var index = arg || 0;
+      // console.log(index)
+      // 判断ul高度（返回来一个高度最小的ul）
+      var refName = this.selectCol();
+      console.log(refName);
+      if (temp.length > index) {
+        // console.log(index)
+        // 每次比较高度之后从mainMenuList数组中取出一张图片放到高度最小的ul中
+        this[refName].push(this.mainMenuList[index]);
+        //当你修改了data的值然后马上获取这个dom元素的值，是不能获取到更新后的值，
+        // 你需要使用$nextTick这个回调，让修改后的data值渲染更新到dom元素之后在获取，才能成功
+        this.$nextTick(() => {
+          this.mountMenu(index + 1);
+          // console.log(refName)
+        });
+      }
+    },
+    selectCol() {
+      var getHeight = ref => {
+        // $refs获取dom节点
+        return this.$refs[ref].offsetHeight;
+      };
+      var height1 = getHeight("col1");
+      var height2 = getHeight("col2");
+      // 判断高度
+      switch (Math.min(height1, height2)) {
+        case height1:
+          return "dataList1";
+          break;
+        case height2:
+          return "dataList2";
+          break;
+      }
+    }
+  }
 };
 </script>
+
 <style lang="scss" scoped>
-.ImgUrl_div {
-  display: flex;
+// 布局样式
+.fall-pic {
+  background: #f5f5f5;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 
-  ul {
-    display: flex;
-    list-style: none;
-    flex-wrap: wrap;
+  .col {
+    width: 50%;
+    &.left {
+      float: left;
+    }
+    &.right {
+      float: right;
+    }
 
-    img {
-      max-width: 400px;
-      max-height: 300px;
+    .item-pro {
+      padding: 2px 4px;
+      img {
+        display: block;
+        width: 100%;
+      }
     }
   }
 }
