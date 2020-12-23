@@ -7,38 +7,38 @@
 </template>
 
 <script>
-import msg from "@src/mixins";
+import msg from '@src/mixins'
 
 export default {
-  name: "ShrButton",
+  name: 'ShrButton',
   mixins: [msg.msg],
   props: {
     time: {
       type: Number,
-      default: 2000,
-    },
+      default: 2000
+    }
   },
-  data() {
+  data () {
     return {
-      loadingbutton: false,
-    };
+      loadingbutton: false
+    }
   },
   methods: {
-    handleClick() {
-      if (this.loadingbutton) return;
+    async handleClick () {
+      if (this.loadingbutton) return
 
-      this.loadingbutton = true;
+      this.loadingbutton = true
       setTimeout(() => {
-        this.loadingbutton = false;
-      }, this.time);
+        this.loadingbutton = false
+      }, this.time)
 
-      this.$emit("click");
-    },
+      this.$emit('click')
+    }
   },
-  created() {
-    this.handlemsgplus();
-  },
-};
+  created () {
+    this.handlemsgplus()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

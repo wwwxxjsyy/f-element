@@ -23,6 +23,7 @@
     "core-js": "^2.6.5",
     "element-ui": "^2.14.1",
     "terser-webpack-plugin": "^4.2.3",
+    "vant": "^2.7.1",
     "vue": "^2.6.10",
     "vue-pdf": "^4.2.0"
   },

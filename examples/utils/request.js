@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MessageBox, Message, Notification } from "element-ui";
+import { Notification } from "element-ui";
 // import store from "@/store";
 
 const service = axios.create({
@@ -24,11 +24,11 @@ service.interceptors.response.use(
     const res = response.data;
 
     if (res.status === 400) {
-      Notification.error({
-        title: '请求内部错误',
-        message: res.message,
-        duration: 2000
-      })
+      // Notification.error({
+      //   title: '请求内部错误',
+      //   message: res.message,
+      //   duration: 2000
+      // })
 
       return Promise.resolve(res);
     } else {
