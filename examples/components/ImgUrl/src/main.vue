@@ -54,11 +54,11 @@ export default {
   },
   methods: {
     handlesearchbtn() {
-      if (this.start !== 0) {
-        location.reload();
-      }
       this.searchstr = this.word;
       this.images = [];
+      this.heightArray = [];
+      document.documentElement.scrollTop = 0;
+      this.start = 0;
       this.getIng(this.start);
     },
     handlekeydow(e) {
