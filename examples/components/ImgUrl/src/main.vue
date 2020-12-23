@@ -48,15 +48,15 @@ export default {
       pn: 1,
       word: "",
       gsm: 87,
-      loading: false,
-      finished: false,
-      list: [],
       start: 0,
       searchstr: "",
     };
   },
   methods: {
     handlesearchbtn() {
+      if (this.start !== 0) {
+        location.reload();
+      }
       this.searchstr = this.word;
       this.images = [];
       this.getIng(this.start);
@@ -64,8 +64,14 @@ export default {
     handlekeydow(e) {
       const keyCode = e.keyCode || e.which || e.charCode;
       if (keyCode === 13) {
+        // if (this.start !== 0) {
+        //   location.reload();
+        // }
         this.searchstr = this.word;
         this.images = [];
+        this.heightArray = [];
+        document.documentElement.scrollTop = 0;
+        this.start = 0;
         this.getIng(this.start);
       }
     },
@@ -154,7 +160,7 @@ export default {
 
       getImgData(data)
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           if (result.status == 200) {
             let arr = [...this.images, ...result.data];
             this.images = arr;
@@ -163,7 +169,7 @@ export default {
             this.disabled = true;
             this.start = this.images.length;
 
-            this.loadImgHeight(this.start);
+            this.loadImgHeight(sum);
           }
         })
         .catch((err) => {
@@ -174,7 +180,7 @@ export default {
   mounted() {
     const _this = this;
     //监听滚动条滚动，实现懒加载图片
-    window.addEventListener("scroll", function() {
+    window.addEventListener("scroll", function () {
       //得到可滚动距离
       const scrollDistance =
         document.documentElement.scrollHeight -
@@ -182,7 +188,7 @@ export default {
       //滚动到顶部的距离
       const scroll = document.documentElement.scrollTop;
 
-      if (scroll == scrollDistance) {
+      if (Math.ceil(scroll) == scrollDistance) {
         _this.count += 1;
 
         // if (_this.count == 4) {
