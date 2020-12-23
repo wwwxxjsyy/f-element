@@ -5,7 +5,7 @@
         <el-input
           v-model="word"
           placeholder="请输入搜索条件"
-          @keydown.enter="handlekeydow"
+          @keydown.native="handlekeydow($event)"
         ></el-input>
       </div>
       <shr-button type="primary" @click="handlesearchbtn" :time="1000"
@@ -61,9 +61,13 @@ export default {
       this.images = [];
       this.getIng(this.start);
     },
-    handlekeydow() {
-      this.searchstr = this.word;
-      this.getIng(this.start);
+    handlekeydow(e) {
+      const keyCode = e.keyCode || e.which || e.charCode;
+      if (keyCode === 13) {
+        this.searchstr = this.word;
+        this.images = [];
+        this.getIng(this.start);
+      }
     },
     /**
      * 预加载图片资源
