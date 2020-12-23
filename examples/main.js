@@ -15,12 +15,12 @@ Vue.use(ShrUI);
 Vue.use(ElementUI);
 Vue.use(components);
 // Vue.use(VueLazyload)
-// Vue.use(VueLazyload, {
-//   preLoad: 1.3,
-//   error: './img/loading.png',
-//   loading: './img/loading.png',
-//   attempt: 1
-// })
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: './img/loading.png',
+  loading: './img/loading.png',
+  attempt: 1
+})
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
