@@ -1,35 +1,30 @@
 <template>
   <div class="waterFall-box" ref="box">
     <div class="content_div">
-      <el-input v-model="word" placeholder=""></el-input>
+      <div class="input_dev">
+        <el-input v-model="word" placeholder=""></el-input>
+      </div>
       <el-button type="primary" @click="handlesearch">开始搜索</el-button>
     </div>
 
     <div class="img-box" v-for="(item, index) in images" :key="index" ref="img">
-      <img :src="item.middleURL" alt="" />
+      <!-- <img :src="item.middleURL" alt="" /> -->
+      <img
+        v-lazy="item.middleURL"
+        :alt="item.fromPageTitle"
+        :title="item.fromPageTitle"
+      />
     </div>
-    <footer
-      v-if="isLoad == false"
-      :style="{
-        position: 'absolute',
-        top: Math.max(...heightArray) + 'px',
-        color: 'red',
-        left: '50%',
-        transform: 'translateX(-50%)',
-      }"
-    >
-      没有图片加载了...
-    </footer>
   </div>
 </template>
 
 <script>
-import { getImgData } from "@/api/imgurl";
+import { getImgData } from '@/api/imgurl'
 // import Axios from 'axios'
 
 export default {
-  name: "ImgUrl",
-  data() {
+  name: 'ImgUrl',
+  data () {
     return {
       images: [], //存储图片资源
       imgWidth: 220, //图片的宽度
@@ -39,50 +34,50 @@ export default {
       offsetP: 0,
       count: 0,
       pn: 190,
-      word: "帅",
-      gsm: 87,
-    };
+      word: '',
+      gsm: 87
+    }
   },
   methods: {
     /**
      * 预加载图片资源
      * */
-    loadImgHeight() {
-      let count = 0; //计数变量 判断是否预加载图片是否完成
-      this.images.forEach((item) => {
+    loadImgHeight () {
+      let count = 0 //计数变量 判断是否预加载图片是否完成
+      this.images.forEach(item => {
         //使用image类预加载图片
-        let image = new Image();
-        image.src = item.middleURL;
+        let image = new Image()
+        image.src = item.middleURL
         image.onload = image.onerror = () => {
-          count++;
+          count++
           if (count == this.images.length) {
             this.$nextTick(() => {
-              this.init();
-              this.positionImg(0);
-            });
+              this.init()
+              this.positionImg(0)
+            })
           }
-        };
-      });
+        }
+      })
     },
     /**
      * @remarks 初始化
      * 初始化容器的宽度，计算出容器可容纳多少固定宽度图片的列，
      * 如果可排列固定宽度的图片宽度无法沾满容器的宽度，需要计算出空余的宽度，固定首图片的left
      * */
-    init() {
+    init () {
       //得到页面的宽度
-      const pageWidth_padding = this.$refs.box.clientWidth;
+      const pageWidth_padding = this.$refs.box.clientWidth
       //页面的padding像素
-      this.offsetP = this.$refs.box.style.paddingLeft.replace(/[^0-9]/gi, "");
+      this.offsetP = this.$refs.box.style.paddingLeft.replace(/[^0-9]/gi, '')
       //获得页面的真实宽度（除去padding、margin、border...）
-      const pageWidth = pageWidth_padding - this.offsetP * 2;
+      const pageWidth = pageWidth_padding - this.offsetP * 2
       //计算出当前页面可展示多少列图片
-      const column = Math.floor(pageWidth / this.imgWidth);
+      const column = Math.floor(pageWidth / this.imgWidth)
       //偏移像素值
-      this.surplusW = pageWidth - column * this.imgWidth;
+      this.surplusW = pageWidth - column * this.imgWidth
       //初始化存储高度数组
       for (let i = 0; i < column; i++) {
-        this.heightArray.push(0);
+        this.heightArray.push(0)
       }
     },
     /**
@@ -91,99 +86,98 @@ export default {
      *  start: 循环开始位置，开始为0，如果滚动条滑到底部，则start为容器存在图片资源的数量即this.images.length
      *  ----------宽高都计算img的父容器的宽高
      * */
-    positionImg(start) {
+    positionImg (start) {
       //获得img标签的父容器的DOM
-      let parentDom = this.$refs.img;
+      let parentDom = this.$refs.img
       for (let i = start; i < this.images.length; i++) {
         //获得最小高度
-        const minHeight = Math.min(...this.heightArray);
+        const minHeight = Math.min(...this.heightArray)
         //获得最小高度索引
-        const index = this.heightArray.indexOf(minHeight);
+        const index = this.heightArray.indexOf(minHeight)
         //获得当前图片的高度
-        const currHeight = parentDom[i].clientHeight;
+        const currHeight = parentDom[i].clientHeight
         //定位
-        parentDom[i].style.transform = "50px";
-        parentDom[i].style.position = "absolute";
-        parentDom[i].style.top = minHeight + "px";
+        parentDom[i].style.transform = '50px'
+        parentDom[i].style.position = 'absolute'
+        parentDom[i].style.top = minHeight + 'px'
         parentDom[i].style.left =
-          this.imgWidth * index + +(Math.floor(this.surplusW / 2) + 30) + "px";
-        this.heightArray[index] += currHeight;
+          this.imgWidth * index + +(Math.floor(this.surplusW / 2) + 30) + 'px'
+        this.heightArray[index] += currHeight
       }
       //对父容器赋值当前heightArray数组的最大高度
-      this.$refs.box.style.height = Math.max(...this.heightArray) + 50 + "px";
+      this.$refs.box.style.height = Math.max(...this.heightArray) + 50 + 'px'
     },
-    handlesearch() {
-      this.images = [];
+    handlesearch () {
       const data = {
         pn: this.pn,
         word: this.word,
-        gsm: this.gsm,
-      };
+        gsm: this.gsm
+      }
 
       getImgData(data)
-        .then((result) => {
-          // console.log(result)
+        .then(result => {
+          console.log(result)
           if (result.status == 200) {
-            this.images = result.data;
+            this.images = result.data
 
-            this.gsm = result.gsm;
-            this.pn += 30;
-            this.loadImgHeight();
+            this.gsm = result.gsm
+            this.pn += 30
+            this.loadImgHeight()
           }
         })
-        .catch((err) => {
-          console.log(err, "err");
-        });
-    },
+        .catch(err => {
+          console.log(err, 'err')
+        })
+    }
   },
-  mounted() {
-    const _this = this;
+  mounted () {
+    const _this = this
     //监听滚动条滚动，实现懒加载图片
-    window.addEventListener("scroll", function () {
+    window.addEventListener('scroll', function () {
       //得到可滚动距离
       const scrollDistance =
         document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+        document.documentElement.clientHeight
       //滚动到顶部的距离
-      const scroll = document.documentElement.scrollTop;
+      const scroll = document.documentElement.scrollTop
 
-      console.log(scroll, "_this.images");
+      console.log(scroll, '_this.images')
       if (scroll > 500) {
         const data = {
           pn: this.pn,
           word: this.word,
-          gsm: this.gsm,
-        };
-        getImgData(data).then((res) => {
-          _this.count += 1;
+          gsm: this.gsm
+        }
+        getImgData(data).then(res => {
+          _this.count += 1
           if (_this.count == 4) {
-            _this.isLoad = false;
+            _this.isLoad = false
           }
           if (_this.isLoad) {
-            const start = _this.images.length;
-            this.gsm = res.gsm;
-            this.pn += 30;
+            const start = _this.images.length
+            this.gsm = res.gsm
+            this.pn += 30
 
             for (let item of res.data) {
-              _this.images.push(item);
+              _this.images.push(item)
             }
             // console.log(_this.images, "_this.images");
             //滑到底部继续加载图片，this.$nextTick()异步加载，待资源虚拟DOM加载完毕
             _this.$nextTick(() => {
-              _this.positionImg(start);
-            });
+              _this.positionImg(start)
+            })
           }
-        });
+        })
       }
-    });
+    })
   },
-  created() {
-    this.handlesearch();
-  },
-};
+  created () {
+    this.handlesearch()
+  }
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .waterFall-box {
   position: relative;
   text-align: center;
@@ -222,7 +216,14 @@ export default {
   position: fixed;
   width: 100%;
   background: gold;
-  z-index: 99999;
+  z-index: 1;
   display: flex;
+  justify-content: center;
+  padding: 20px 0;
+
+  .input_dev {
+    width: 400px;
+    margin-right: 30px;
+  }
 }
 </style>
