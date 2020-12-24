@@ -145,11 +145,15 @@ export default {
         parentDom[i].style.position = "absolute";
         parentDom[i].style.top = minHeight + "px";
         parentDom[i].style.left =
-          this.imgWidth * index + Math.floor(this.surplusW / 2) + "px";
+          // this.imgWidth * index + Math.floor(this.surplusW / 2) + "px";
+          parentDom[i].style.left =
+            this.imgWidth * index +
+            +(Math.floor(this.surplusW / 2) + 30) +
+            "px";
         this.heightArray[index] += currHeight;
       }
       //对父容器赋值当前heightArray数组的最大高度
-      this.$refs.box.style.height = Math.max(...this.heightArray) + "px";
+      this.$refs.box.style.height = Math.max(...this.heightArray) + 50 + "px";
     },
     getIng(sum) {
       const data = {
@@ -165,7 +169,7 @@ export default {
             let arr = [...this.images, ...result.data];
             this.images = arr;
             this.gsm = result.gsm;
-            this.pn += 30;
+            this.pn += 10;
             this.disabled = true;
             this.start = this.images.length;
 
@@ -180,7 +184,7 @@ export default {
   mounted() {
     const _this = this;
     //监听滚动条滚动，实现懒加载图片
-    window.addEventListener("scroll", function () {
+    window.addEventListener("scroll", function() {
       //得到可滚动距离
       const scrollDistance =
         document.documentElement.scrollHeight -

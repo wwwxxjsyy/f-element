@@ -18,7 +18,8 @@
     ></ShrdrAwing> -->
 
     <!-- <div v-html="datatext"></div> -->
-    <ImgUrl></ImgUrl>
+    <!-- <ImgUrl></ImgUrl> -->
+    <WaterfallFlow></WaterfallFlow>
   </div>
 </template>
 
