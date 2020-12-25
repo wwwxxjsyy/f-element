@@ -25,6 +25,7 @@
 </template>
 <script>
 export default {
+  name: "WaterfallFlow",
   data() {
     return {
       tempImage: [],
@@ -119,7 +120,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "./var";
+@import "./common/var";
+@import "./common/space";
 
 .image {
   padding-top: $header-height;

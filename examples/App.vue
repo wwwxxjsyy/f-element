@@ -19,7 +19,8 @@
 
     <!-- <div v-html="datatext"></div> -->
     <!-- <ImgUrl></ImgUrl> -->
-    <WaterfallFlow></WaterfallFlow>
+    <!-- <WaterfallFlow></WaterfallFlow> -->
+    <HappyMoment></HappyMoment>
   </div>
 </template>
 
@@ -105,11 +106,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   color: #2c3e50;
+  width: 100%;
+  height: 100%;
 }
 
 #nav {
-  // padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;

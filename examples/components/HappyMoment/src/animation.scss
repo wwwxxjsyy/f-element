@@ -1,0 +1,176 @@
+body {
+  background: #222020;
+  perspective: 600px;
+}
+
+.cube {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  top: 100px;
+  left: 45%;
+  transform-style: preserve-3d;
+  // 在3D空间中呈现被嵌套的元素，必须与transform属性一同使用
+  animation: rotationMainContainer 5s linear infinite;
+  // 动画的名称，执行时间，匀速运动，无限次数
+  // 创建动画，定义动画的名称，时长的百分比
+}
+
+@keyframes rotationMainContainer {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    /* 元素围绕其X Y Z轴旋转的度数*/
+  }
+
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+.cube-face {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  background: #0b63be;
+  opacity: 0.5;
+}
+
+.cube-face-front {
+  transform: translatez(75px);
+  // z轴方向进行偏移75个像素
+  animation: bgCAFace 15s linear infinite;
+}
+
+@keyframes bgCAFace {
+  0% {
+    background: #a6abb6;
+  }
+
+  25% {
+    background: #373b6d;
+  }
+
+  50% {
+    background: #b47a38;
+  }
+
+  100% {
+    background: #e75e03;
+  }
+}
+
+.cube-face-back {
+  transform: translateZ(-75px);
+  animation: bgCABack 5s linear infinite;
+}
+
+@keyframes bgCABack {
+  0% {
+    background: #abbcd3;
+  }
+
+  25% {
+    background: #e6ae14;
+  }
+
+  50% {
+    background: #573a22;
+  }
+
+  100% {
+    background: #0d5cfc;
+  }
+}
+
+.cube-face-left {
+  transform: rotateY(90deg) translateZ(75px);
+  // y坐标旋转90度，z轴方向进行偏移75个像素
+  animation: bgCALeft 5s linear infinite;
+}
+
+@keyframes bgCALeft {
+  0% {
+    background: #5879c7;
+  }
+
+  25% {
+    background: #eb6e08;
+  }
+
+  50% {
+    background: #321c64;
+  }
+
+  100% {
+    background: #f10712;
+  }
+}
+
+.cube-face-right {
+  transform: rotateY(90deg) translateZ(-75px);
+  animation: bgCARight 5s linear infinite;
+}
+
+@keyframes bgCARight {
+  0% {
+    background: #e0f00b;
+  }
+
+  25% {
+    background: #a1a4ac;
+  }
+
+  50% {
+    background: #03f523;
+  }
+
+  100% {
+    background: #f16304;
+  }
+}
+
+.cube-face-top {
+  transform: rotateX(90deg) translateZ(-75px);
+  animation: bgCATop 5s linear infinite;
+}
+
+@keyframes bgCATop {
+  0% {
+    background: #080808;
+  }
+
+  25% {
+    background: #ebedf3;
+  }
+
+  50% {
+    background: #03f03e;
+  }
+
+  100% {
+    background: #e95c31;
+  }
+}
+
+.cube-face-bottom {
+  transform: rotateX(-90deg) translateZ(-75px);
+  animation: bgCABottom 5s linear infinite;
+}
+
+@keyframes bgCABottom {
+  0% {
+    background: #414349;
+  }
+
+  25% {
+    background: #044292;
+  }
+
+  50% {
+    background: #e9e512;
+  }
+
+  100% {
+    background: #ff09b5;
+  }
+}

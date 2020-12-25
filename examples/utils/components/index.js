@@ -1,9 +1,10 @@
 import PDFDrawing from '@/components/PDFDrawing'
 import ImgUrl from '@/components/ImgUrl'
 import WaterfallFlow from '@/components/WaterfallFlow'
+import HappyMoment from '@/components/HappyMoment'
 
 // 所有组件列表
-const components = [PDFDrawing, ImgUrl, WaterfallFlow]
+const components = [PDFDrawing, ImgUrl, WaterfallFlow, HappyMoment]
 
 // 定义 install 方法，接收 Vue 作为参数
 const install = function (Vue) {
