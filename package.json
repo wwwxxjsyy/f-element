@@ -12,7 +12,6 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js"
@@ -22,6 +21,9 @@
     "compression-webpack-plugin": "^1.1.2",
     "core-js": "^2.6.5",
     "element-ui": "^2.14.1",
+    "happypack": "^5.0.1",
+    "html-webpack-plugin": "^4.5.1",
+    "os": "^0.1.1",
     "terser-webpack-plugin": "^4.2.3",
     "vant": "^2.7.1",
     "vue": "^2.6.10",
