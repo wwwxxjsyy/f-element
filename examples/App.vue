@@ -47,6 +47,7 @@ export default {
     //     // this.datatext = res.data;
     //   })
     // this.handler()
+    console.log('console.loghhh')
   },
   methods: {
     // handleCallback({ type, data }) {
