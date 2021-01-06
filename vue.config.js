@@ -12,6 +12,7 @@ module.exports = {
     port: 9981,
     open: true,
     https: false,
+    // compress: false, // 开启压缩
     hotOnly: true, //当编译失败时，不刷新页面
     overlay: {
       warnings: false, //用来在编译出错的时候，在浏览器页面上显示错误
@@ -20,8 +21,8 @@ module.exports = {
     proxy: {
       '/s': {
         target: 'https://www.baidu.com',
-        changeOrigin: true, // 允许websockets跨域
-        // ws: true,
+        changeOrigin: true, // 是否跨域，虚拟的站点需要更改origin
+        // ws: true, // 允许websockets跨域
         pathRewrite: {
           '^/s': '/s'
         }
@@ -109,6 +110,19 @@ module.exports = {
       .set('~', path.resolve('packages'))
       .set('@com', path.resolve('components'))
       .set('@src', path.resolve('src'))
+
+    // 生产环境配置
+    if (process.env.NODE_ENV === 'production') {
+      // 删除预加载
+      config.plugins.delete('preload') //  移除 preload 插件
+      config.plugins.delete('prefetch') // 移除 prefetch 插件
+      // 压缩代码
+      config.optimization.minimize(true)
+      // 分割代码
+      config.optimization.splitChunks({
+        chunks: 'all'
+      })
+    }
 
     // 把 packages 和 examples 加入编译，因为新增的文件默认是不被 webpack 处理的
     config.module
