@@ -4,6 +4,7 @@
     <div class="caoz_class">
       <el-radio v-model="radio" label="1">头部颜色</el-radio>
       <el-radio v-model="radio" label="2">体部颜色</el-radio>
+      <el-radio v-model="radio" label="3">体部颜色</el-radio>
       <el-color-picker
         v-model="color1"
         @change="handleChange"
@@ -16,6 +17,7 @@
         width: '100%',
         height: '30px',
         'text-align': 'center',
+        'line-height':'30px',
         'background-color': jsonData.headcolor,
       }"
     >
@@ -26,10 +28,22 @@
         width: '100%',
         height: '30px',
         'text-align': 'center',
+        'line-height':'30px',
         'background-color': jsonData.contentcolor,
       }"
     >
       体部颜色
+    </div>
+    <div
+      :style="{
+        width: '100%',
+        height: '30px',
+        'text-align': 'center',
+        'line-height':'30px',
+        'background-color': jsonData.footercolor,
+      }"
+    >
+      底部颜色
     </div>
   </div>
 </template>
@@ -51,6 +65,7 @@ export default {
       jsonData: {
         headcolor: "",
         contentcolor: "",
+        footercolor: "",
       },
     };
   },
@@ -83,6 +98,8 @@ export default {
         this.jsonData.headcolor = val;
       } else if (this.radio == "2") {
         this.jsonData.contentcolor = val;
+      } else if (this.radio == "3") {
+        this.jsonData.footercolor = val;
       }
     },
   },
