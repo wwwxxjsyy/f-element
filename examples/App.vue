@@ -3,6 +3,7 @@
     <div id="nav">
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
+      <router-view />
     </div>
     <!-- <router-view /> -->
     <!-- <Shr-Button>Button</Shr-Button> -->
@@ -20,7 +21,7 @@
     <!-- <div v-html="datatext"></div> -->
     <!-- <ImgUrl></ImgUrl> -->
     <!-- <WaterfallFlow></WaterfallFlow> -->
-    <HappyMoment></HappyMoment>
+    <!-- <HappyMoment></HappyMoment> -->
   </div>
 </template>
 
@@ -47,7 +48,7 @@ export default {
     //     // this.datatext = res.data;
     //   })
     // this.handler()
-    console.log('console.loghhh')
+    console.log("console.log");
   },
   methods: {
     // handleCallback({ type, data }) {
