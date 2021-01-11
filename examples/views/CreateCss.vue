@@ -17,9 +17,10 @@
         width: '100%',
         height: '30px',
         'text-align': 'center',
-        'line-height':'30px',
+        'line-height': '30px',
         'background-color': jsonData.headcolor,
       }"
+      class="head_class"
     >
       头部颜色
     </div>
@@ -28,7 +29,7 @@
         width: '100%',
         height: '30px',
         'text-align': 'center',
-        'line-height':'30px',
+        'line-height': '30px',
         'background-color': jsonData.contentcolor,
       }"
     >
@@ -39,7 +40,7 @@
         width: '100%',
         height: '30px',
         'text-align': 'center',
-        'line-height':'30px',
+        'line-height': '30px',
         'background-color': jsonData.footercolor,
       }"
     >
