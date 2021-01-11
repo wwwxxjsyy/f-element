@@ -11,7 +11,6 @@
       <el-button type="primary" @click="handleOk" size="small">确认</el-button>
     </div>
     <br />
-    <hr />
     <div
       :style="{
         width: '100%',
