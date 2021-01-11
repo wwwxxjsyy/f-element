@@ -68,7 +68,7 @@ export default {
             this.jsonData = res.data;
           }
         })
-        .catch((res) => {});
+        .catch(() => {});
     },
     handleOk() {
       setCreatecss(this.jsonData)
