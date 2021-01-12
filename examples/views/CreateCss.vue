@@ -2,14 +2,21 @@
 <template>
   <div class="createcss_class">
     <div class="caoz_class">
-      <el-radio v-model="radio" label="1">头部颜色</el-radio>
-      <el-radio v-model="radio" label="2">体部颜色</el-radio>
-      <el-radio v-model="radio" label="3">体部颜色</el-radio>
-      <el-color-picker
-        v-model="color1"
-        @change="handleChange"
-      ></el-color-picker>
-      <el-button type="primary" @click="handleOk" size="small">确认</el-button>
+      <div class="color_class">
+        <el-radio v-model="radio" label="1">头部颜色</el-radio>
+        <el-radio v-model="radio" label="2">体部颜色</el-radio>
+        <el-radio v-model="radio" label="3">底部颜色</el-radio>
+        <el-color-picker
+          v-model="color1"
+          @change="handleChange"
+        ></el-color-picker>
+      </div>
+
+      <div class="button_class">
+        <el-button type="primary" @click="handleOk" size="small"
+          >确认</el-button
+        >
+      </div>
     </div>
     <br />
     <div
@@ -90,6 +97,11 @@ export default {
         .then((res) => {
           if (res.code == 200) {
             this.jsonData = res.data;
+            this.$notify({
+              title: "成功",
+              message: "已将选中颜色保存",
+              type: "success",
+            });
           }
         })
         .catch(() => {});
@@ -118,10 +130,16 @@ export default {
 
   .caoz_class {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 
     .el-button {
       margin-left: 10px;
+    }
+
+    .color_class,
+    .button_class {
+      display: flex;
+      align-items: center;
     }
   }
 }
