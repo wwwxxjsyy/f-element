@@ -2,7 +2,7 @@ import request from '@/utils/request'
 /**
  * 写入css
  */
-export function setCreatecss (data) {
+export function setCss (data) {
   return request({
     url: '/api/createcss',
     method: 'post',

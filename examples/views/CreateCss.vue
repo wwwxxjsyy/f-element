@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { setCreatecss, getCss } from "@/api/createcss";
+import { setCss, getCss } from "@/api/createcss";
 
 export default {
   name: "",
@@ -93,7 +93,7 @@ export default {
         .catch(() => {});
     },
     handleOk() {
-      setCreatecss(this.jsonData)
+      setCss(this.jsonData)
         .then((res) => {
           if (res.code == 200) {
             this.jsonData = res.data;
