@@ -27,7 +27,7 @@
 
 <script>
 // import axios from 'axios'
-import url from "@/assets/img/smallpig.jpg";
+import url from "@/assets/img/logo.png";
 
 export default {
   name: "app",

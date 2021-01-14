@@ -124,6 +124,25 @@ module.exports = {
       })
     }
 
+    // function resolve(dir) {
+    //   return path.join(__dirname, dir);
+    // }
+
+    // config.module
+    //   .rule('svg')
+    //   .exclude.add(resolve('src/icons'))
+    //   .end()
+    // config.module
+    //   .rule('icons')
+    //   .test(/\.svg$/)
+    //   .include.add(resolve('src/icons'))
+    //   .end()
+    //   .use('svg-sprite-loader')
+    //   .loader('svg-sprite-loader')
+    //   .options({
+    //     symbolId: 'icon-[name]'
+    //   })
+
     // 把 packages 和 examples 加入编译，因为新增的文件默认是不被 webpack 处理的
     config.module
       .rule('js')
