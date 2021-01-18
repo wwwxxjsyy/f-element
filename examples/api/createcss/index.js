@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export function setCss (data) {
   return request({
-    url: '/api/createcss',
+    url: '/api/createCss',
     method: 'post',
     data
   })
@@ -15,7 +15,7 @@ export function setCss (data) {
  */
 export function getCss () {
   return request({
-    url: '/api/getcss',
+    url: '/api/getCss',
     method: 'get',
   })
 }

@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export function getImgData (data) {
   return request({
-    url: '/api/spider4',
+    url: '/api/baiduImg',
     method: 'get',
     params: data
   })
