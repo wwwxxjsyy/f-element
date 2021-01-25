@@ -51,6 +51,7 @@ export default {
 .HappyMoment_div {
   width: 100%;
   height: 100%;
+
   background: radial-gradient(
     circle closest-corner,
     rgb(248, 248, 248) 0,
@@ -125,8 +126,8 @@ export default {
   @keyframes myanimation {
     // transform: rotateX(13deg) rotateY(31deg);
     0% {
-      transform: scale(0.6) rotate(0deg) rotateY(0deg) rotateZ(0deg);
-      -webkit-transform: scale(0.6) rotate(0deg) rotateY(0deg) rotateZ(0deg);
+      transform: scale(0.6) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      -webkit-transform: scale(0.6) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
     }
 
     25% {
