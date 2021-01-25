@@ -10,7 +10,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.baseURL = 'http://192.168.10.23:8088'
+    config.baseURL = 'http://192.168.11.187:8088'
     return config
   },
   error => {
