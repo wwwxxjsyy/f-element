@@ -4,6 +4,8 @@ const CompressionPlugin = require('compression-webpack-plugin') //压缩为gzip�
 const Happypack = require('happypack')
 const os = require('os')
 const happyThreadPool = Happypack.ThreadPool({ size: os.cpus().length })
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin //Webpack包文件分析器
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
@@ -59,9 +61,11 @@ module.exports = {
           })
         ]
       }
+
       Object.assign(config, {
         optimization
       })
+
       //开启gzip压缩
       const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
       config.plugins = [
@@ -72,8 +76,23 @@ module.exports = {
           test: productionGzipExtensions, //匹配文件名
           threshold: 10240, //对超过10k的数据压缩
           deleteOriginalAssets: false //不删除源文件
-        })
+        }),
+
+        // new BundleAnalyzerPlugin() //开启文件大小分析
       ]
+
+      //根据显示文件大小做优化，依据webpack的externals，将element分离为小文件
+      // let externals = {
+      //   lodash: '_',
+      //   vue: 'Vue',
+      //   echarts: 'echarts',
+      //   'element-ui': 'ELEMENT',
+      //   pdf: 'PDFJS'
+      // }
+
+      // Object.assign(config, {
+      //   externals
+      // })
     } else {
       // 为开发环境修改配置...
       config.mode = 'development'
